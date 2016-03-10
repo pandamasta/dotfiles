@@ -1,0 +1,146 @@
+URxvt*transparent: false
+URxvt*tintColor: Blue
+URxvt*saveLines: 12000
+#URxvt*foreground: Grey
+#URxvt*background: Black
+
+# Xft (X FreeType) with Bitstream, DejaVu, Liberation, or Terminus fonts:
+#  Fedora/debian packages: libXft/libxft2 
+#  An anti-aliased font setup with Xft looks fantastic; it can be a bit choppy 
+#  on older systems. You can always turn off anti-aliasing (antialias=false) if
+#  your terminal is sluggish. Use only ONE of the Xft pairs below:
+#
+# Xft: Bitstream fonts
+#  Fedora/debian packages: bitstream-vera-sans-mono-fonts/ttf-bitstream-vera 
+#URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=12:antialias=true:hinting=true
+#URxvt*boldFont: xft:Bitstream Vera Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
+#
+# Xft: DejaVu fonts
+#  Fedora/debian packages: dejavu-sans-mono-fonts/ttf-dejavu 
+#URxvt*font: xft:DejaVu Sans Mono:pixelsize=10:antialias=true:hinting=true
+#URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
+#URxvt.font:xft:Monospace:pixelsize=10
+#URxvt.boldfont:xft:Monospace-Bold:pixelsize=10
+#URxvt.font:     xft:bitstream vera sans mono:size=16:antialias=true
+#URxvt.boldFont: xft:bitstream vera sans mono:bold:size=16:antialias=true
+
+#URxvt*font: xft:Monospace:pixelsize=14
+#URxvt*boldFont: xft:Monospace:pixelsize=14
+#URxvt.allow_bold: false
+URxvt.intensityStyles: false
+URxvt*cursorBlink: true
+URxvt*underlineColor: yellow
+URxvt*font:  xft:inconsolata:size=10:antialias=true
+#
+# Xft: Liberation fonts
+#  Fedora/debian packages: liberation-mono-fonts/ttf-liberation
+#URxvt*font: xft:Liberation Mono:pixelsize=13:antialias=true:hinting=true
+#URxvt*boldFont: xft:Liberation Mono:bold:pixelsize=13:antialias=true:hinting=true
+#
+# Xft: Terminus fonts
+#  Fedora/debian packages: terminus-fonts/xfonts-terminus
+#URxvt*font: xft:terminus:pixelsize=15
+#URxvt*boldFont: xft:terminus:bold:pixelsize=15
+
+# Traditional fonts - a more traditional font setup in lieu of xft
+#URxvt*font:-*-courier-medium-r-normal-*-14-*-*-*-*-*-iso8859-1
+#URxvt*boldFont:-*-courier-bold-r-normal-*-14-*-*-*-*-*-iso8859-1
+
+#URxvt*color4: RoyalBlue
+#URxvt*color12: RoyalBlue
+
+URxvt*scrollBar: true
+URxvt*scrollBar_right: false
+# scrollbar style - rxvt (default), plain, next, or xterm
+URxvt*scrollstyle: rxvt
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintfull
+
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 1
+
+URxvt.perl-ext-common: default,matcher,font-size,tabbed
+
+URxvt.geometry: 80x25
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: 0
+#
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
+#
+URxvt.perl-lib: ~/.urxvt/ext  
+
+! ------------------------------------------------------------------------------
+! --- end of terminal colors section -------------------------------------------
+! ------------------------------------------------------------------------------
+
+! --- ~/.Xresources ------------------------------------------------------------
+! ------------------------------------------------------------------------------
+! --- generated with 4bit Terminal Color Scheme Designer -----------------------
+! ------------------------------------------------------------------------------
+! --- http://ciembor.github.com/4bit -------------------------------------------
+! ------------------------------------------------------------------------------
+
+! --- special colors ---
+
+URxvt*background: #0d1926
+URxvt*foreground: #d9e6f2
+
+! --- standard colors ---
+
+! black
+URxvt*color0: #3d3d3d
+
+! bright_black
+URxvt*color8: #494949
+
+! red
+URxvt*color1: #d3615f
+
+! bright_red
+URxvt*color9: #e9b0af
+
+! green
+URxvt*color2: #5fd361
+
+! bright_green
+URxvt*color10: #afe9b0
+
+! yellow
+URxvt*color3: #d1d35f
+
+! bright_yellow
+URxvt*color11: #e8e9af
+
+! blue
+URxvt*color4: #615fd3
+
+! bright_blue
+URxvt*color12: #b0afe9
+
+! magenta
+URxvt*color5: #d35fd1
+
+! bright_magenta
+URxvt*color13: #e9afe8
+
+! cyan
+URxvt*color6: #5fd1d3
+
+! bright_cyan
+URxvt*color14: #afe8e9
+
+! white
+URxvt*color7: #d9d9d9
+
+! bright_white
+URxvt*color15: #ffffff
+
+

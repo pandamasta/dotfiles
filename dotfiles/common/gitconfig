@@ -1,0 +1,12 @@
+[user]
+    name= Aurelien Martin
+    email = 01aurelien@gmail.com
+
+
+[alias]
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lg1 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    oneline = log --pretty=oneline --abbrev-commit --graph
+
+[color]
+	ui = auto

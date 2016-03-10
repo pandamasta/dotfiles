@@ -1,0 +1,65 @@
+" author          :Aurelien Martin
+" description     :My vimrc written from scratch based on vimdoc and tricks found on the web
+
+"""""""""""""""""""""" Global setup 
+
+set nocompatible               "Vim working in an improved way
+
+syntax on                      " Add syntax highlighting 
+colorscheme desert             " Color scheme
+set background=dark            " Background colors
+set backspace=indent,eol,start " Behavior of backspace
+set autoindent                 " Use the indent of the previous line for a newly created line
+set backup                     " Keep a backup copy of a file when overwriting it
+set history=100                " Keep commands and search patterns in the history
+set showcmd                    " Display an incomplete command in the lower right corner of the Vim window 
+set ruler                      " Display the current cursor position in the lower right corner 
+set incsearch                  " Display the match for a search pattern
+set hlsearch                   " Highlight the search
+set cmdheight=1                " Hight of the command bar
+set undolevels=150             " Number of cached undo
+set autoread                   " Read when a file is changed from the outside
+set showmatch		       " Show matching brackets.
+set number                     " Line number
+set noerrorbells               " No bells on errors
+set novisualbell               " No bells on visual errors
+set listchars=tab:>-,trail:-   " How display tab looks
+set filetype=unix,dos,mac      " Unix as the standard file type
+filetype plugin indent on      " Figure out what kind of file this is
+"set paste
+
+""""""""""""""""""""" Fold and tab
+
+set foldmethod=indent                               " Fold by indented block
+set tabstop=8 expandtab shiftwidth=4 softtabstop=4  " Tabing in pythonic style
+
+
+""""""""""""""""""""" Backup
+set nobackup       "Keep backup file
+set nowritebackup  " 
+set noswapfile
+"silent execute '!mkdir "~/'.$HOME.'/.vim/swapfiles"'
+"call mkdir("$HOME/.vim/swapfiles","p")
+"set backupdir=$HOME/.vim/tmp//
+"set directory=$HOME/.vim/tmp// "Where the swapfile are stored. Double slash to build the full path
+
+
+""""""""""""""""""""" Color tunnings
+
+highlight Pmenu ctermfg=0 ctermbg=3 " Menu color
+highlight PmenuSel ctermfg=0 ctermbg=7 "  Menu selection color
+highlight MatchParen ctermbg=darkblue guibg=blue " Parenthesis matching color
+
+"""""""""""""""""""""" Explorer
+"Ctrl + 6 in order to return to last buffer 
+let g:netrw_liststyle=3 "Explorer style
+let g:netrw_winsize=18
+
+"""""""""""""""""""""" Keymap
+let mapleader=" " "Space as leader key 
+map <leader>k :Vexplore<cr> 
+nnoremap <F2> :set nu!<CR>   " Display num
+nnoremap <F3> :set list!<CR>   " Display tab
+nnoremap <F4> :set foldmethod=indent <CR> " Fold idented blocks 
+nnoremap <F5> :Lexplore <CR> " Native VIM explorer
+nnoremap <F8> :!clear;python %<CR>
