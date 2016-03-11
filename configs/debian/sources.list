@@ -1,0 +1,24 @@
+## unstable
+
+deb http://ftp.ch.debian.org/debian/ experimental main contrib non-free
+deb-src http://ftp.ch.debian.org/debian/ experimental main contrib non-free
+
+## unstable
+
+deb http://ftp.ch.debian.org/debian/ sid main contrib non-free
+deb-src http://ftp.ch.debian.org/debian/ sid main contrib non-free
+
+## testing
+
+deb http://ftp.ch.debian.org/debian/ testing main contrib non-free
+deb-src http://ftp.ch.debian.org/debian/ testing main contrib non-free
+
+deb http://security.debian.org/ testing/updates main contrib non-free
+
+## stable
+
+deb http://ftp.ch.debian.org/debian/ stable main contrib non-free
+deb-src http://ftp.ch.debian.org/debian/ stable main contrib non-free
+
+deb http://security.debian.org/ stretch/updates main contrib non-free
+deb-src http://security.debian.org/ stretch/updates main contrib non-free
