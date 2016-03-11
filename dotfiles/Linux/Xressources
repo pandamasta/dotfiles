@@ -1,0 +1,84 @@
+URxvt*transparent: false
+URxvt*tintColor: Blue
+URxvt*saveLines: 12000
+
+URxvt.intensityStyles: false
+URxvt*cursorBlink: true
+URxvt*underlineColor: yellow
+URxvt*font:  xft:inconsolata:size=10:antialias=true
+
+URxvt*scrollBar: true
+URxvt*scrollBar_right: false
+URxvt*scrollstyle: rxvt
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintfull
+
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 1
+URxvt.geometry: 80x25
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: 0
+
+URxvt.perl-lib: ~/.urxvt/ext  
+URxvt.perl-ext-common: default,tabbed
+
+!URxvt.keysym.C-Up:     perl:font-size:increase
+!URxvt.keysym.C-Down:   perl:font-size:decrease
+!URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+!URxvt.keysym.C-S-Down: perl:font-size:decglobal
+
+URxvt*background: #0d1926
+URxvt*foreground: #d9e6f2
+
+! black
+URxvt*color0: #3d3d3d
+
+! bright_black
+URxvt*color8: #494949
+
+! red
+URxvt*color1: #d3615f
+
+! bright_red
+URxvt*color9: #e9b0af
+
+! green
+URxvt*color2: #5fd361
+
+! bright_green
+URxvt*color10: #afe9b0
+
+! yellow
+URxvt*color3: #d1d35f
+
+! bright_yellow
+URxvt*color11: #e8e9af
+
+! blue
+URxvt*color4: #615fd3
+
+! bright_blue
+URxvt*color12: #b0afe9
+
+! magenta
+URxvt*color5: #d35fd1
+
+! bright_magenta
+URxvt*color13: #e9afe8
+
+! cyan
+URxvt*color6: #5fd1d3
+
+! bright_cyan
+URxvt*color14: #afe8e9
+
+! white
+URxvt*color7: #d9d9d9
+
+! bright_white
+URxvt*color15: #ffffff
