@@ -107,3 +107,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Map Ctrl-S to someting usefull other than XOFF (interrupt data flow).
+stty -ixon
