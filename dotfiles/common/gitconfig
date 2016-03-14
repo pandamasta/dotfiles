@@ -7,8 +7,11 @@
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     lg1 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     oneline = log --pretty=oneline --abbrev-commit --graph
+    co = checkout
+    br = branch
 
 [color]
 	ui = auto
+
 [push]
 	default = simple
