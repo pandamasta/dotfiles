@@ -2,7 +2,7 @@
 
 pkg_global='i3 tmux rxvt-unicode terminator mc ranger aspell-fr aspell-en sshfs qpdfview unrar ccze rsync unison unison-gtk apcalc arandr encfs taskwarrior rxvt-unicode roxterm terminator' 
 pkg_system='aptitude iftop alien rkhunter htop lshw bash-completion pv powerstat wicd-curses ftp apt-file lsscsi iotop'
-pkg_devel='vim git tig gdb ddd pylint python-pip exuberant-ctags gcc g++ build-essential autoconf automake autotools-dev fakeroot libncurses5-dev ncurses-base pgadmin3 virtualenv cmake'
+pkg_devel='vim git tig gdb ddd pylint python-pip exuberant-ctags gcc g++ build-essential autoconf automake autotools-dev fakeroot libncurses5-dev ncurses-base pgadmin3 virtualenv cmake puppet-lint python-pylint-django'
 pkg_debian='apt-listbugs apt-listchanges debhelper dh-make debmake devscripts lintian quilt checkinstall'
 pkg_elec='arduino oregano gspiceui'
 pkg_internet='tor hexchat irssi w3m nmap chromium icedove ncftp'

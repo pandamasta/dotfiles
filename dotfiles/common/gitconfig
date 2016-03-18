@@ -9,6 +9,7 @@
     oneline = log --pretty=oneline --abbrev-commit --graph
     co = checkout
     br = branch
+    st = status
 
 [color]
 	ui = auto

@@ -13,10 +13,18 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'raimondi/delimitmate'
 Plug 'majutsushi/tagbar'
-Plug 'valloric/youcompleteme'
+Plug 'rodjek/vim-puppet'
+Plug 'scrooloose/syntastic'
 call plug#end()
 
-" Extra plugin config
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 1
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_pylint_args = "--load-plugins pylint_django"
