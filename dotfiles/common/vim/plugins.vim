@@ -25,6 +25,8 @@ Plug 'kien/ctrlp.vim'
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/closetag.vim'
 "Plug 'valloric/youcompleteme'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 "" Extra plugin config
@@ -39,6 +41,10 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_pylint_args = "--load-plugins pylint_django"
+
+hi SpellBad cterm=bold ctermbg=red guibg=LightYellow
+hi SpellCap cterm=bold ctermbg=red guibg=LightYellow
+
 
 
 " Youcompleteme
