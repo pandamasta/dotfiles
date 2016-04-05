@@ -16,7 +16,7 @@ endif
 syntax on                      " Add syntax highlighting
 
 colorscheme desert
-set t_Co=16                    " 16 color mode
+set t_Co=256                    " 16 color mode
 set background=dark            " Background colors
 set backspace=indent,eol,start " Behavior of backspace
 set autoindent                 " Use the indent of the previous line for a newly created line
@@ -59,6 +59,7 @@ set backupdir=$HOME/.vim/backupdir//
 highlight Pmenu ctermfg=0 ctermbg=3 " Menu color
 highlight PmenuSel ctermfg=0 ctermbg=7 "  Menu selection color
 highlight MatchParen ctermbg=darkblue guibg=blue " Parenthesis matching color
+hi Search ctermfg=Yellow ctermbg=NONE cterm=bold,underline
 
 """""""""""""""""""""" Explorer
 "Ctrl + 6 in order to return to last buffer
