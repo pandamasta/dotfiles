@@ -1,0 +1,4 @@
+AUTO_DEBSIGN=${AUTO_DEBSIGN:-no}
+HOOKDIR=/var/cache/pbuilder/hooks
+#BINDMOUNTS="${BINDMOUNTS} ~/pprojects"
+#PBUILDERSATISFYDEPENDSCMD="/usr/lib/pbuilder/pbuilder-satisfydepends-gdebi"
