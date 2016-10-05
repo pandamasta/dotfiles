@@ -31,22 +31,22 @@ CreateLink(){
       #Get the basename of the file
       filename=`echo $file | cut -sd / -f 2-`
       #If the config file exist, backup and create a symblink to the repo
-      if [ -f ~/\.$filename ] || [ -d ~/\.$filename ]; then
+      if [ -f ~/$filename ] || [ -d ~/$filename ]; then
           #If the config file is a symblink do nothing (for the moment)
-          if [ -L ~/\.$filename ] ; then
+          if [ -L ~/$filename ] ; then
           target=`readlink -f $filename` 
           echo "$filename is a symblink -> $target"
       else
          #Backup the existing file and create the symb link
-         echo ".$filename is a regular file in $HOME"
-	     echo "Move ~/.$filename to ~/.$filename.orig"
-         mv ~/.$filename ~/.$filename.orig
-         echo "Symblink $ROOT_OF_REPO/dotfiles/$i to ~/.$filename"
-         ln -s $ROOT_OF_REPO/dotfiles/$i ~/.$filename
+         echo "$filename is a regular file in $HOME"
+	 echo "Move ~/$filename to ~/$filename.orig"
+         mv ~/$filename ~/$filename.orig
+         echo "Symblink $ROOT_OF_REPO/dotfiles/$filename to ~/$filename"
+         ln -s $ROOT_OF_REPO/dotfiles/$filename ~/$filename
       fi
   else
-      echo ".$filename doesn't exist in $HOME. Symblink $ROOT_OF_REPO/dotfiles/$file to ~/.$filename"
-      ln -s $ROOT_OF_REPO/dotfiles/$file ~/.$filename
+      echo "$filename doesn't exist in $HOME. Symblink $ROOT_OF_REPO/dotfiles/$file to ~/$filename"
+      ln -s $ROOT_OF_REPO/dotfiles/$file ~/$filename
    fi
 done
 
