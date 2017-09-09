@@ -26,6 +26,7 @@ alias mount='mount |column -t'
 alias pubkey='cat ~/.ssh/id_rsa.pub'
 alias pubhash='find ~/.ssh/ -name *.pub -exec ssh-keygen -E md5 -lf {} \;'
 alias logmess='sudo tail -50 /var/log/messages'
+alias lsln='ls -la --color=always | grep --color=never ">"'
 
 alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
 alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
@@ -68,7 +69,11 @@ xcolors(){
 }
 
 cppk(){
-cat ~/.ssh/id_dsa.pub | ssh $1 'cat - >> ~/.ssh/authorized_keys'
+if [ $# -eq 0 ];then
+    echo "Please provide full path of the pub key";
+    else
+        cat $1 | ssh $2 $3 'cat - >> ~/.ssh/authorized_keys'
+fi
 }
 
 

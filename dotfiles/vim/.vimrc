@@ -35,7 +35,7 @@ set noerrorbells               " No bells on errors
 set novisualbell               " No bells on visual errors
 set listchars=tab:>-,trail:-   " How display tab looks
 set filetype=unix              " Unix as the standard file type
-set mouse=a                    " Enable mouse support (scrolling,copy...)
+set mouse-=a                   " Enable mouse support (scrolling,copy...)
 
 """"""""""""""""""""" Fold and tab
 

@@ -1,2 +1,3 @@
 dotfiles/common/.vim/autoload/
 dotfiles/common/.vim/plugged/
+dotfiles/common/.vim/.netrwhist

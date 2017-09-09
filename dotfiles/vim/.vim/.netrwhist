@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/panda/git/private/pelican'
+let g:netrw_dirhist_2='/home/panda'
+let g:netrw_dirhist_3='/etc/polkit-1/rules.d'
+let g:netrw_dirhist_4='/home/panda'
+let g:netrw_dirhist_5='/home/panda/git/private/pelican'
+let g:netrw_dirhist_6='/media/panda/3c68caf5-cde9-4590-97b1-7013eb10ca49/panda/git/private/dotfiles/dotfiles'
