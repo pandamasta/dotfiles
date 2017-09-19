@@ -26,7 +26,6 @@ alias mount='mount |column -t'
 alias pubkey='cat ~/.ssh/id_rsa.pub'
 alias pubhash='find ~/.ssh/ -name *.pub -exec ssh-keygen -E md5 -lf {} \;'
 alias logmess='sudo tail -50 /var/log/messages'
-alias lsln='ls -la --color=always | grep --color=never ">"'
 
 alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
 alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
@@ -45,14 +44,17 @@ alias ......="cd ../../../../.."
 
 #### Functions
 
-function lan_ip {
+lan_ip() {
   echo "$(/sbin/ifconfig 2>/dev/null | grep 'inet '|grep -v '127.0.0.1'| awk '{print $2}'|cut -d':' -f2|head -1)"
 }
 
-function wan_ip {
+wan_ip() {
   curl ifconfig.me 
 }
 
+lsln() {
+ ls -la --color=always $1 | grep --color=never '>'
+}
 
 genpasswd() {
     local l=$1
@@ -60,23 +62,21 @@ genpasswd() {
         tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
 }
 
-xevkey(){
+xevkey() {
     xev | sed -n 's/^.*state \([0-9].*\), keycode *\([0-9]\+\) *\(.*\), .*$/keycode \2 = \3, state = \1/p'
 }
 
-xcolors(){
+xcolors() {
    (x=`tput op` y=`printf %76s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done)
 }
 
-cppk(){
+cppk() {
 if [ $# -eq 0 ];then
     echo "Please provide full path of the pub key";
     else
         cat $1 | ssh $2 $3 'cat - >> ~/.ssh/authorized_keys'
 fi
 }
-
-
 
 extract () {
   if [ -f $1 ] ; then
@@ -99,7 +99,7 @@ extract () {
   fi
 }
 
-function mkcdr {
+mkcdr() {
     mkdir -p -v $1
     cd $1
 }
@@ -114,4 +114,15 @@ listcolors () {
 		printf '\e[0m';
 		[ ! $((($i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
 	done
+}
+
+aptcheck() {
+
+cat /etc/apt/sources.list
+ls -l /etc/apt/sources.list.d
+cat /etc/apt/preferences
+ls -l /etc/apt/preferences.d
+ping -c 3 debian.org
+
+
 }

@@ -1,7 +1,10 @@
-[user]
-    name= Aurelien Martin
-    email = github@lamacloud.com
-
+;Since git 1.7.10 it'es possible to include external file
+;I use it to store private data like:
+;[user]
+;    name= 
+;    email = 
+[include]
+    path = ~/.gitconfigPrivate
 
 [alias]
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
