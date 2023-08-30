@@ -15,17 +15,18 @@ alias aptgu='sudo apt-get update'
 alias aptcp='sudo apt-cache policy'
 alias aptcs='sudo apt-cache search'
 alias bashupdate='source ~/.bash_aliases'
-alias vimrc='vim ~/.vimrc'
-alias vialias='vim ~/.bash_aliases'
-alias svim='sudo vim'
-alias vipkg='vim ~/debian-mypkg.sh'
-alias viplug='vim ~/.vim/plugins.vim'
 alias ports='netstat -tulanp'
 alias header='curl -I'
 alias mount='mount |column -t'
 alias pubkey='cat ~/.ssh/id_rsa.pub'
 alias pubhash='find ~/.ssh/ -name *.pub -exec ssh-keygen -E md5 -lf {} \;'
 alias logmess='sudo tail -50 /var/log/messages'
+
+alias vimrc='vim ~/.vimrc'
+alias vialias='vim ~/.bash_aliases'
+alias svim='sudo vim'
+alias vipkg='vim ~/debian-mypkg.sh'
+alias viplug='vim ~/.vim/plugins.vim'
 
 alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
 alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
@@ -41,6 +42,8 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
+
+#### Private non-versinoned aliases
 
 #### Functions
 

@@ -111,8 +111,8 @@ hi Search ctermfg=Yellow ctermbg=NONE cterm=bold,underline
 
 """""""""""""""""""""" Explorer
 "Ctrl + 6 in order to return to last buffer
-let g:netrw_liststyle=3 "Explorer style
-let g:netrw_winsize=18
+"let g:netrw_liststyle=3 "Explorer style
+"let g:netrw_winsize=18
 
 """""""""""""""""""""" Keymap
 let mapleader="\\" "Backlash as leader key
