@@ -1,0 +1,28 @@
+call plug#begin()
+Plug 'https://github.com/dense-analysis/ale'
+Plug 'https://github.com/phanviet/vim-monokai-pro'
+call plug#end()
+
+filetype plugin indent on
+set autoindent
+set autoread
+set completeopt=menu,popup,noinsert,noselect
+set formatoptions+=j
+set hidden
+set hlsearch
+set ignorecase
+set incsearch
+set lazyredraw
+set noswapfiles
+set nowrap
+set shiftround
+set showmatch
+set smartcase
+set smarttab
+set wildmenu
+
+let g:ale_completion_enabled = 1
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_text_changed = 0
+let g:ale_open_list = 1
