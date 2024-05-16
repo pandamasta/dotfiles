@@ -135,3 +135,26 @@ ping -c 3 debian.org
 
 
 }
+
+verifycert() {
+  openssl x509 -noout -modulus -in "$1" | openssl md5;
+  openssl rsa -noout -modulus -in "$2" | openssl md5;
+}
+
+git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+export PS1="<\@> \[$(tput sgr0)\]\[\033[38;5;11m\]\u\[$(tput sgr0)\]@\h:\[$(tput sgr0)\]\[\033[38;5;6m\][\w]\[$(tput sgr0)\]:\\$ \$(git_branch) \[$(tput sgr0)\]"
+
+curl_time() {
+    curl -so /dev/null -w "\
+   namelookup:  %{time_namelookup}s\n\
+      connect:  %{time_connect}s\n\
+   appconnect:  %{time_appconnect}s\n\
+  pretransfer:  %{time_pretransfer}s\n\
+     redirect:  %{time_redirect}s\n\
+starttransfer:  %{time_starttransfer}s\n\
+-------------------------\n\
+        total:  %{time_total}s\n" "$@"
+}
