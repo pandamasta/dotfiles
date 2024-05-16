@@ -43,6 +43,12 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
+# Load private aliases if exist.
+
+if [ -f ~/.bash_aliases_private ]; then
+    source ~/.bash_aliases_private
+fi
+
 #### Private non-versinoned aliases
 
 #### Functions

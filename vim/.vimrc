@@ -1,7 +1,6 @@
 " author          :Aurelien Martin
 " description     :My vimrc written from scratch based on vimdoc and tricks found on the web
 
-
 set nocompatible               " Vim working in an improved way. Must be first option
 
 """""""""""""""""""""" Source file if plugins
@@ -10,6 +9,18 @@ set nocompatible               " Vim working in an improved way. Must be first o
 "    source $HOME/.vim/plugins.vim
 "endif
 
+""""" Plugin 
+
+"call plug#begin()
+"Plug 'junegunn/fzf'
+"Plug 'junegunn/fzf.vim'
+"Plug 'preservim/tagbar'
+"Plug 'dense-analysis/ale'
+"call plug#end()
+
+"""" Remap for plugin
+
+nnoremap <silent> <C-f> :Files<CR>
 
 """""""""""""""""""""" Global setup
 
@@ -28,20 +39,18 @@ set ruler                      " Display the current cursor position in the lowe
 set incsearch                  " Display the match for a search pattern
 set cmdheight=1                " Hight of the command bar
 set autoread                   " Read when a file is changed from the outside
-set showmatch		               " Show matching brackets.
 set number                     " Line number
 set noerrorbells               " No bells on errors
 set novisualbell               " No bells on visual errors
 set listchars=tab:>-,trail:-   " How display tab looks
 set filetype=unix              " Unix as the standard file type
-set mouse-=a                   " Enable mouse support (scrolling,copy...)
+set mouse=a                   " Enable mouse support (scrolling,copy...)
 
 """"""""""""""""""""" Cursor
 
 set scrolloff=3
 set cursorline
-
-set showmatch
+set showmatch " Show matching brackets
 
 
 """"""""""""""""""""" Search
@@ -55,6 +64,11 @@ hi Search ctermfg=Red
 hi ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
 
 match ExtraWhitespace /\s\+$/
+
+set path=$PWD/**        " enable fuzzy finding in the vim command line
+set wildmenu            " enable fuzzy menu
+set wildignore+=**/.git/**,**/__pycache__/**,**/venv/**,**/node_modules/**,**/dist/**,**/build/**,*.o,*.pyc,*.swp
+set wildignore+=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 """"""""""""""""""""" Fold and tab
 set foldmethod=indent                               " Fold by indented block
@@ -71,8 +85,8 @@ set expandtab                  " Always use space instead of tab
 set nobackup       " Keep backup file
 set nowritebackup  "
 set noswapfile     "
-set directory=$HOME/.vim/swapdir//
-set backupdir=$HOME/.vim/backupdir//
+"set directory=$HOME/.vim/swapdir//
+"set backupdir=$HOME/.vim/backupdir//
 
 
 """"""""""""""""""""" FileType
@@ -89,7 +103,7 @@ autocmd FileType python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.pp set filetype=puppet
 autocmd BufRead,BufNewFile *.pp setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab textwidth=80 smarttab
 
-"Python Settings
+" Python Settings detailed
 "autocmd FileType python set softtabstop=4
 "autocmd FileType python set tabstop=4
 "autocmd FileType python set autoindent
@@ -97,6 +111,14 @@ autocmd BufRead,BufNewFile *.pp setlocal tabstop=4 shiftwidth=4 softtabstop=4 ex
 "autocmd FileType python set textwidth=80
 "autocmd FileType python set smartindent
 "autocmd FileType python set shiftwidth=4
+"
+
+
+""""""""""""""""""""  Folding
+
+set foldmethod=indent
+nnoremap <space> za
+vnoremap <space> zf
 
 """"""""""""""""""""" Menu
 set path=$PWD/**        " enable fuzzy finding in the vim command line
