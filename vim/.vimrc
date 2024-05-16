@@ -8,6 +8,20 @@ set nocompatible               " Vim working in an improved way. Must be first o
 "if filereadable(glob("$HOME/.vim/plugins.vim"))
 "    source $HOME/.vim/plugins.vim
 "endif
+"
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+
+call plug#end()
 
 """"" Plugin 
 
@@ -137,7 +151,7 @@ hi Search ctermfg=Yellow ctermbg=NONE cterm=bold,underline
 "let g:netrw_winsize=18
 
 """""""""""""""""""""" Keymap
-let mapleader="\\" "Backlash as leader key
+let mapleader="%" "Backlash as leader key
 
 map <leader>k :Vexplore<cr>
 nnoremap <F2> :set nu!<CR> "Display num
@@ -172,6 +186,8 @@ hi DiffAdd      gui=none    guifg=NONE          guibg=#bada9f
 hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac
 hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0
 hi DiffText     gui=none    guifg=NONE          guibg=#8cbee2
+
+hi Folded ctermbg=0 ctermfg=15
 
 
 """"""""""""""""""""" Functions
