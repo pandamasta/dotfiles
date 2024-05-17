@@ -93,7 +93,7 @@ rsync -e 'ssh -p 2222' -avz --progress /path/with/data boby@hello.net:/destinati
 
 SSL
 ---
-
+```
 # Generate RSA private key encoded in Triple DES
 openssl genrsa -des3 -out server.key 4096
 
@@ -143,6 +143,7 @@ openssl s_client -proxy <HOST:PORT> -connect <HOST:PORT> -servername=<HOST>  2>&
 
 #  Create p12
 openssl pkcs12 -export -in wildcard.foo.cer -inkey wildcard.foo.key -certfile GLOBALSIGN.crt -out certif.p12
+```
 
 Packages
 ---------
