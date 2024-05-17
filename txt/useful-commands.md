@@ -1,6 +1,6 @@
 Title: Useful commands
 Date: 2017-01-27
-Modified: 2017-09-23
+Modified: 2024-05-17
 Category: Howto
 Tags: linux,cli
 Summary: List of standard and most usefull CLI tools and tips
@@ -72,57 +72,81 @@ Swap
 	swapon /dev/sdax
 	mkswap -U `uuidgen` /dev/sdax
 	ls -l /dev/disk/by-uuid/*
+   
+    # Swap usage of process
+    #echo "COMM PID SWAP"; for file in /proc/*/status ; do awk '/^Pid|VmSwap|Name/{printf $2 " " $3}END{ print ""}' $file; done | grep kB | grep -wv "0 kB" | sort -k 3 -n -r) | column -t
 
 ssh
 ---
-    Tunnel SSH, local forwarding
-    ssh -L 6666:localhost:8888 user@server -p443
 
-    Dynamic forwarding; port translation SOCKS proxy
-    ssh -D <local_port>@<host> -p<port>
+# Tunnel SSH, local forwarding
+ssh -L 6666:localhost:8888 user@server -p443
 
+# Dynamic forwarding; port translation SOCKS proxy
+ssh -D <local_port>@<host> -p<port>
 
 Rsync
 ----
-    # Use a different ssh port
-    rsync -e 'ssh -p 2222' -avz --progress /path/with/data boby@hello.net:/destination/path
+
+# Use a different ssh port
+rsync -e 'ssh -p 2222' -avz --progress /path/with/data boby@hello.net:/destination/path
 
 SSL
 ---
 
-    # Generate RSA private key encoded in Triple DES
-    openssl genrsa -des3 -out server.key 4096
+# Generate RSA private key encoded in Triple DES
+openssl genrsa -des3 -out server.key 4096
 
-    # Generate x509 certificate without priv' key passphrase
-    openssl req -x509 -newkey rsa:4096 -out server.key -nodes
+# Generate x509 certificate without priv' key passphrase
+openssl req -x509 -newkey rsa:4096 -out server.key -nodes
 
-    # Generate CSR
-    openssl req -new -key server.key -out server.csr
+# Generate CSR
+openssl req -new -key server.key -out server.csr
 
-    # Remove the passphrase of RSA key if needed
-    openssl rsa -in server.key -out server.key.new
+# Remove the passphrase of RSA key if needed
+openssl rsa -in server.key -out server.key.new
 
-    # Generating a Self-signed Certificate
-    openssl x509 -req -days 365 -in server.csr -signkey server.key.new -out server.crt
+# Generating a Self-signed Certificate
+openssl x509 -req -days 365 -in server.csr -signkey server.key.new -out server.crt
 
-    # Generating a Self-Signed Certificate in one line
-    openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+# Generating a Self-Signed Certificate in one line
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 
-    # Extract pem to private key
-    openssl rsa -outform der -in key.pem -out private.key
+# Extract pem to private key
+openssl rsa -outform der -in key.pem -out private.key
 
-    #SSL/TLS client which can establish a transparent connection to a remote server speaking SSL/TLS
-    openssl s_client -starttls smtp -connect ip:587
+#SSL/TLS client which can establish a transparent connection to a remote server speaking SSL/TLS
+openssl s_client -starttls smtp -connect ip:587
 
-    #Check the validity of certificate
-    openssl x509 -noout -dates -in /usr/local/etc/letsencrypt/live/foo.me/cert.pem
-    echo | openssl s_client -servername www.shellhacks.com -connect www.shellhacks.com:443 2>/dev/null | openssl x509 -noout -dates
+#Check the validity of certificate
+openssl x509 -noout -dates -in /usr/local/etc/letsencrypt/live/foo.me/cert.pem
+echo | openssl s_client -servername www.shellhacks.com -connect www.shellhacks.com:443 2>/dev/null | openssl x509 -noout -dates
 
-    #Check certificate 
-    echo | openssl s_client -servername pandaa.me -connect pandaa.me:443
+#Check certificate 
+echo | openssl s_client -servername pandaa.me -connect pandaa.me:443
+
+# Read x509 crt
+openssl x509 -in <CERTIFICATE>.crt -noout -text
+
+# Read PFX crt
+openssl pkcs12 -info -in <CERTIFICATE>.pfx
+
+# Read CSR
+openssl req -noout -text -in <CERTIFICATE>.csr
+
+# Get remote cert
+openssl s_client -connect xxxx:443
+
+# Get remote cert and dump its expiration
+openssl s_client -connect xxxx:443 2>/dev/null | openssl x509 -noout -dates
+openssl s_client -proxy <HOST:PORT> -connect <HOST:PORT> -servername=<HOST>  2>&1 | openssl x509 -noout -dates
+
+#  Create p12
+openssl pkcs12 -export -in wildcard.foo.cer -inkey wildcard.foo.key -certfile GLOBALSIGN.crt -out certif.p12
 
 Packages
 ---------
+
     # List the content of a .deb
     dpkg -c package.deb
     ar tv package.deb
@@ -145,6 +169,42 @@ Packages
     dpkg --info
 
     apt-cache showpkg coreutils
+
+
+dpkg
+-----
+# Put a package on hold:
+echo "<package-name> hold" | sudo dpkg --set-selections
+
+# Remove the hold:
+echo "<package-name> install" | sudo dpkg --set-selections
+
+# Display the status of all your packages:
+dpkg --get-selections
+
+# Display the status of a single package:
+dpkg --get-selections <package-name>
+
+# Show all packages on hold:
+dpkg --get-selections | grep "\<hold$"
+
+# Check database sanity and consistency on package
+dpkg -C <package>
+
+apt
+---
+# Hold a package
+sudo apt-mark hold <package-name>
+
+# Remove the hold
+apt-mark unhold <package-name>
+
+# Show all packages on hold:
+apt-mark showhold
+
+# Simulate install
+apt -s install ./<package>.deb
+
 
 Audio
 ------
@@ -344,8 +404,9 @@ LVM
     # Probe the LVM volumes
     lvmdiskscan 
 
-    #Get logical volume information
-    lvdisplay 
+    #Get pv vg and lv information
+    pvdisplay ; vgdisplay ; lvdisplay
+    pvs ; vgs ; lvs
 
     #Scan volume group by probing physical volume
     vgscan
@@ -353,16 +414,21 @@ LVM
     #Active volume group (eg: vg1)
     vgchange -ay vg1
 
+    # Extend logical volume
+    lvextend -L +50G /dev/os_local_vg/pgbackup
+    resize2fs /dev/os_local_vg/pgbackup
+
 File System
 -----------
 
     # Check integrity of fileystem
-	fsck -yfv -C fd /dev/sda
+	 fsck -yfv -C fd /dev/sda
 	fsck -a (all)
 
     # Check file system full
 	for i in `ls / | grep -v "afs\|boot\|tmp\|var"`; do du -ah $i | awk '$1 ~ /G$/ { print $0 }'; done
 	du -ahx /var | awk '$1 ~ /G$/ { print $0 }'
+    du -a /var/log/ | sort -n -r | head -n 20
 
     # Bigest file
 	du -hs /srv/castor/* | sort -nr | head -8
@@ -441,6 +507,8 @@ IPMI
 
 	ipmitool -H 192.168.0.100 -U moi -P mon_super_mot_de_passe power status
 
+    ipmitool -I lanplus -H host -U admin chassis status
+
 
 
 Other
@@ -498,37 +566,36 @@ System
 Systemd
 --------
 
-    Enable a service at boot
+    # Enable a service at boot
     systemctl enable sshd.service
 
-    Disable
+    # Disable
     systemctl disable sshd.service
 
-    Status
+    # Status
     systemctl is-active sshd.service
 
-    All service running
+    # All service running
     systemctl list-units --type=service 
 
-    Get runlevel
+    # Get runlevel
     systemctl get-default
-
     multi-user.target = 3
     graphical.target = 5
 
-    Change runlevel
+    # Change runlevel
     systemctl isolate graphical.target
 
-    Change runlevel by default
+    # Change runlevel by default
     systemctl set-default graphical.target
 
     systemctl --system daemon-reload
 
 
-    systemctl start nom_du_service.service 
-    systemctl stop nom_du_service.service 
-    systemctl restart sshd.service
-    systemctl reload sshd.service
+    systemctl start xx.service 
+    systemctl stop xx.service 
+    systemctl restart xx.service
+    systemctl reload xx.service
 
 
 Debug
@@ -546,33 +613,6 @@ man
 	zcat /usr/share/man/man1/man.1.gz  | groff -mandoc -Thtml > file.html
 	
 
-tmux
-----
-    # Create a new session with name
-    Ctrl-b :new -s <name>
-    tmux new -s <name>
-
-    # Swith interactively session
-    Ctrl-b s
-
-    #Killing pane
-    Ctrl-b x 
-
-    #Killing window
-    Ctrl-b &
-
-    tmux new -s session_name
-    tmux attach -t session_name
-    tmux switch -t session_name
-    tmux list-sessions
-    tmux detach (prefix + d)
-
-
-git
----
-    git update-index --assume-unchanged vim/.vim/.netrwhist
-    git update-index --no-assume-unchanged #Revert back
-
 sound
 ------
 
@@ -589,7 +629,7 @@ sound
 FreeBSD
 -------
     # Recompile kernel with vimage support
-      cp /usr/src/sys/amd64/conf/GENERIC /usr/src/sys/amd64/conf/GENERIC-FreeBSD-vimage
+       cp /usr/src/sys/amd64/conf/GENERIC /usr/src/sys/amd64/conf/GENERIC-FreeBSD-vimage
       do you modif'
       cd /usr/src
       make buildkernel kernconf=/usr/src/sys/amd64/conf/GENERIC-FreeBSD-vimage
@@ -604,5 +644,265 @@ FreeBSD
 
 Debian
 ------
+
+-------------------
+
+KVM
+----
+virsh snapshot-create-as --domain hostname  --name "20220204" --description "Snapshot"
+
+
+vmware
+-------
+# extend vmware new vmdk size
+# echo 1 > /sys/block/sda/device/rescan
+# parted /dev/sda
+Disk /dev/sda: 752GB
+(parted) resizepart 1
+End?  [666GB]? 752GB
+#pvresize /dev/sda1
+# lvextend -L +50G /dev/os_local_vg/pgbackup
+#resize2fs /dev/os_local_vg/pgbackup
+
+find
+-----
+
+# Find file > 4GB
+find /var/log/ -xdev -size +4096 -exec ls -l {} \;| awk '{print $5/1024/1024, $1, $2, $3, $4, $6, $7, $8, $9}'| sort -nr| head -25
+
+# Find dm mapping
+find /dev/ -name "dm-*" -exec readlink -n {} \; -exec echo " -->" {} \;
+
+# Find occurence in all .htaccess file
+find /www/apache2/ -type f -name '.htaccess' | xargs fgrep 'occurence'
+
+# Find pattern in file changed 1 day ago
+find /var/log/apache2/ -mtime -1 -name "*.log" -print0 | xargs -0 grep -R pattern 
+
+
+SSH
+------
+
+# Check if the key is a key
+ssh-keygen -l -f id_rsa.pub 
+# Show key size and algorithm.
+ssh-keygen -l -f <file> 
+# generate pubkey for verification
+ssh-keygen -y -f id_rsa 
+
+# Remove a key from known_hosts
+ssh-keygen -f "/root/.ssh/known_hosts" -R "foo.com"
+ssh-keygen -H -F foo.com
+
+# pssh with sshpass
+/usr/bin/sshpass -f ~/xxx parallel-ssh -h /tmp/hostfile.txt -t 10 -A -l username -i -O StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null uptime 2> /dev/null
+
+PERL
+------
+
+cpan -l
+perldoc perllocal | grep Module
+
+tmux
+-----
+
+
+Ctrl+b " - split pane horizontally.
+Ctrl+b % - split pane vertically.
+Ctrl+b arrow key — switch pane.
+Hold Ctrl+b, don’t release it and hold one of the arrow keys — resize pane.
+Ctrl+b c - (c)reate a new window.
+Ctrl+b n - move to the (n)ext window.
+Ctrl+b p - move to the (p)revious window.
+Ctrl+b } { - Rotate pane
+Ctrl+b space - Horizontal to vertical
+Ctrl+b alt+o - swap pane
+
+# Create a new session with name
+Ctrl-b :new -s <name>
+tmux new -s <name>
+
+# Swith interactively session
+Ctrl-b s
+
+#Killing pane
+Ctrl-b x 
+
+#Killing window
+Ctrl-b &
+
+tmux new -s session_name
+tmux attach -t session_name
+tmux switch -t session_name
+tmux list-sessions
+tmux detach (prefix + d)
+
+
+chrome
+------
+
+chrome://net-internals/#hsts
+
+GPG
+---
+
+# Encrypt .file to .file.gpg with symmetric password
+gpg  --output .file.gpg  --symmetric .file
+
+
+Git
+----
+
+# Remove merged branch interactivelly with vim. Be carefull to not remove master
+git branch --merged >/tmp/merged-branches && \
+  vi /tmp/merged-branches && xargs git branch -d < /tmp/merged-branches
+
+# Remove all branche exept master.
+git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -d
+
+# Undo last commit
+git reset --soft HEAD~1
+
+git diff --name-only
+git diff --color-words
+
+git clone -c http.sslverify=false
+git config --global http.proxy http://hostname:port
+
+GIT_SSH_COMMAND='ssh -i private_key_file -o IdentitiesOnly=yes' git clone user@host:repo.git
+
+git tag <tag_name> <commit_hash>
+git push --tags
+
+# Delete tag remote 
+git push --delete origin v0.1
+
+git tag -d v0.1
+git branch --contains xx
+
+
+git update-index --assume-unchanged vim/.vim/.netrwhist
+git update-index --no-assume-unchanged #Revert back
+
+lsof
+----
+# List listen socket TCP
+lsof -i TCP:443
+lsof -nP -iTCP -sTCP:LISTEN
+
+ss
+---
+#TCP port open
+ss -tunlp
+
+Windows
+-------
+
+#Nat
+
+Add-NetNatStaticMapping  -NatName NATNetwork  -Protocol TCP  -ExternalIPAddress 0.0.0.0/24  -ExternalPort 80  -InternalIPAddress 10.0.0.3  -InternalPort 80
+
+
+Curl
+-----
+
+
+ curl -w "@curl-format.txt" -o /dev/null -s "http://wordpress.com/"
+
+     time_namelookup:  %{time_namelookup}s\n
+        time_connect:  %{time_connect}s\n
+     time_appconnect:  %{time_appconnect}s\n
+    time_pretransfer:  %{time_pretransfer}s\n
+       time_redirect:  %{time_redirect}s\n
+  time_starttransfer:  %{time_starttransfer}s\n
+                     ----------\n
+          time_total:  %{time_total}s\n
+
+Vim
+___
+
+# vimdiff disable color
+TERM=vt100 vimdiff or set t_Co=0
+
+:%!jq . # One line to good format
+:%!column -t # Nice collumn
+
+
+
+journalctl
+----------
+
+journalctl --since "1 hour ago"
+journalctl  --since "2023-03-10 00:00"
+journalctl -u metricbeat -n 100 --no-pager
+journalctl -b -1
+journalctl --since "2015-06-26 23:15:00" --until "2015-06-26 23:20:00"
+
+Regex
+-----
+
+#^((?!SUN).)*$
+
+ZFS
+----
+
+# Delete ZFS snapshots
+#zfs destroy -R lxd_pool/containers/${TARGET}_diskint@os 
+
+# List snapshot
+zfs list -t snapshot | grep <hostname>
+
+# Restore LXC with ZFS snapshot
+lxc restore $TARGET os ; for i in `zfs list -t snapshot | grep $TARGET | awk '{print $1}'`; do echo zfs rollback $i; done 
+
+# Set quota to pool
+zfs set quota=10G lxd_pool/containers/xxxx_diskint/home
+
+
+LXC
+---
+
+# Take snapshot of a container
+lxc snapshot xxxxx backup_name
+
+# Delete LXC container
+lxc delete ${TARGET}
+
+#Delete LXC snapshot
+
+lxc delete $HOST/<snapshot> 
+
+# Stop container
+lxc-stop -n containerNameHere --kill
+
+# Set cpu limit
+lxc config set <hostname> limits.cpu 8
+
+
+
+apache
+------
+
+apachectl -v
+
+grep
+----
+
+# grep IP
+grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'
+
+Solaris
+----------
+
+# agregat
+dladm show-aggr -L
+dladm show-dev:w
+
+Tcpdump
+--------
+tcpdump -i eth0 dst x.x.x.x and src x.x.x.x and src port 80 -w xx.pcap
+
+
+
 
 

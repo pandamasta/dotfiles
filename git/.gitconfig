@@ -4,7 +4,7 @@
 ;    name= 
 ;    email = 
 [include]
-    path = ~/.gitconfigPrivate
+    path = ~/.gitconfig_private
 
 [alias]
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit

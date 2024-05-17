@@ -63,7 +63,7 @@ set mouse=a                   " Enable mouse support (scrolling,copy...)
 """"""""""""""""""""" Cursor
 
 set scrolloff=3
-set cursorline
+"set cursorline
 set showmatch " Show matching brackets
 
 
@@ -218,5 +218,5 @@ nnoremap <S-F12>   m`:TrimSpaces<CR>``
 vnoremap <S-F12>   :TrimSpaces<CR>
 
 " Show trailing whitepace and spaces before a tab:
-:highlight ExtraWhitespace ctermbg=red guibg=red
-:autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+":highlight ExtraWhitespace ctermbg=red guibg=red
+":autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/

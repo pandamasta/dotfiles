@@ -24,6 +24,7 @@ alias logmess='sudo tail -50 /var/log/messages'
 
 alias vimrc='vim ~/.vimrc'
 alias vialias='vim ~/.bash_aliases'
+alias vialiaspriv='vim ~/.bash_aliases_private'
 alias svim='sudo vim'
 alias vipkg='vim ~/debian-mypkg.sh'
 alias viplug='vim ~/.vim/plugins.vim'
@@ -58,7 +59,7 @@ lan_ip() {
 }
 
 wan_ip() {
-  curl ifconfig.me 
+  curl ifconfig.me
 }
 
 lsln() {
@@ -157,4 +158,17 @@ curl_time() {
 starttransfer:  %{time_starttransfer}s\n\
 -------------------------\n\
         total:  %{time_total}s\n" "$@"
+}
+
+check_swap() {
+
+(echo "COMM PID SWAP";
+for file in /proc/*/status;
+do
+  awk '/^Name|^Pid|^VmSwap/ {printf $2 " " $3 " "}' $file |
+  awk 'NF==3' |
+  awk '{print $1, $2, $3}' |
+  grep kB | grep -wv "0 kB"
+done | sort -k 3 -n -r) | column -t
+
 }
