@@ -19,3 +19,12 @@
 
 [push]
 	default = simple
+
+#[init]
+#    defaultBranch = main
+#[pull]
+#    rebase = false
+[push]
+    # Automatically set origin as the remote for current branch
+    autoSetupRemote = true
+

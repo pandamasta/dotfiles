@@ -44,6 +44,8 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
+alias pssh="usr/bin/sshpass -f ~/.sp parallel-ssh -x "-o StrictHostKeyChecking=no" -A -l user -H"
+
 # Load private aliases if exist.
 
 if [ -f ~/.bash_aliases_private ]; then
@@ -172,3 +174,9 @@ do
 done | sort -k 3 -n -r) | column -t
 
 }
+
+export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
+ssh-add -l 2>/dev/null >/dev/null
+if [ $? -ge 2 ]; then
+  ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+fi
