@@ -777,6 +777,14 @@ git branch --contains xx
 
 git update-index --assume-unchanged vim/.vim/.netrwhist
 git update-index --no-assume-unchanged #Revert back
+
+# Rewrite Author
+
+git rebase -r <some commit before all of your bad commits> --exec 'git commit --amend --no-edit --reset-author'
+or
+git rebase -r --root --exec "git commit --amend --no-edit --reset-author"
+
+
 ```
 
 lsof
