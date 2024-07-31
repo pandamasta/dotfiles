@@ -175,8 +175,28 @@ done | sort -k 3 -n -r) | column -t
 
 }
 
+#export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
+#ssh-add -l 2>/dev/null >/dev/null
+#if [ $? -ge 2 ]; then
+#  ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+#fi
+
+# Set the SSH_AUTH_SOCK environment variable
 export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
-ssh-add -l 2>/dev/null >/dev/null
+
+# Check if the SSH agent is running by listing added keys
+ssh-add -l > /dev/null 2>&1
+
+# If the agent is not running, start a new one
 if [ $? -ge 2 ]; then
-  ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+  # Ensure no existing socket file
+  if [ -e "$SSH_AUTH_SOCK" ]; then
+    rm -f "$SSH_AUTH_SOCK"
+  fi
+
+  # Start a new ssh-agent
+  eval $(ssh-agent -a "$SSH_AUTH_SOCK") > /dev/null
+
+  # Add the SSH key to the new agent
+  ssh-add ~/.ssh/id_amartin
 fi
