@@ -1,0 +1,15 @@
+[Unit]
+Description=rTorrent Service
+After=network.target
+
+[Service]
+Type=oneshot
+User=user
+ExecStart=/usr/bin/tmux new-session -d -s rtorrent /usr/bin/rtorrent
+ExecStop=/usr/bin/tmux kill-session -t rtorrent
+RemainAfterExit=true
+WorkingDirectory=/home/user
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,20 @@
+[Unit]
+Description=Flood Service
+After=network.target
+
+[Service]
+User=user
+Group=user
+Type=oneshot
+WorkingDirectory=/home/user
+ExecStart=/usr/bin/tmux new-session -d -s flood_session '/usr/local/bin/flood -h 192.168.1.10 -p 3000'
+ExecStop=/usr/bin/tmux kill-session -t flood_session
+RemainAfterExit=true
+Restart=on-failure
+RestartSec=5
+KillMode=control-group
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
+
