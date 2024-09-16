@@ -1,8 +1,6 @@
 #!/bin/bash
 # Author: Aurelien Martin - 2024-09-26
 
-#!/bin/bash
-
 # Define the path to the credentials file
 CRED_FILE="$HOME/.backup_creds"
 GZIP_FLAG=0
@@ -23,7 +21,7 @@ show_help() {
     echo "Decryption Instructions:"
     echo "To decrypt an encrypted backup file, use the following command:"
     echo ""
-    echo "  openssl enc -aes-256-cbc -d -in <encrypted_file> -out <output_file> -k <your_password>"
+    echo "  openssl enc -aes-256-cbc -pbkdf2 -d -in <encrypted_file> -out <output_file> -k <your_password>"
     echo ""
     echo "If the file was compressed, you will need to decompress it after decryption:"
     echo "  gunzip <output_file>.gz"
@@ -94,12 +92,22 @@ if [ "$GZIP_FLAG" -eq 1 ]; then
     echo "Compressing the backup with gzip..."
     gzip "$BACKUP_FILE"
     BACKUP_FILE="$GZIPPED_FILE"
+    # Remove the original .sql file after gzipping
+    #rm "/backup/pgdump_all_backup_${TIMESTAMP}.sql"
 fi
 
 # Optionally encrypt the file
 if [ "$ENCRYPT_FLAG" -eq 1 ]; then
     echo "Encrypting the backup..."
-    openssl enc -aes-256-cbc -salt -in "$BACKUP_FILE" -out "${BACKUP_FILE}.enc" -k "$BACKUP_PASS"
+    openssl enc -aes-256-cbc -salt -pbkdf2 -in "$BACKUP_FILE" -out "${BACKUP_FILE}.enc" -k "$BACKUP_PASS"
+    
+    # Remove the original .gz file or .sql file after encryption
+    if [ "$GZIP_FLAG" -eq 1 ]; then
+        rm "$GZIPPED_FILE"
+    else
+        rm "/backup/pgdump_all_backup_${TIMESTAMP}.sql"
+    fi
+
     BACKUP_FILE="${BACKUP_FILE}.enc"
 fi
 
@@ -109,8 +117,13 @@ find /backup/ -type f -name '*.sql.gz' -o -name '*.sql.enc' -mtime +7 -delete
 # Optionally upload the backup via FTP
 if [ "$FTP_FLAG" -eq 1 ]; then
     echo "Uploading backup to FTP..."
-    curl -T "$BACKUP_FILE" --user "$FTP_USER:$FTP_PASS" "$FTP_URL/$(basename "$BACKUP_FILE")"
-    echo "Backup uploaded to FTP: $(basename "$BACKUP_FILE")"
+    # Suppress curl output and check its return code
+    curl -T "$BACKUP_FILE" --user "$FTP_USER:$FTP_PASS" "$FTP_URL/$(basename "$BACKUP_FILE")" -s
+    if [ $? -eq 0 ]; then
+        echo "Backup successfully uploaded to FTP: $(basename "$BACKUP_FILE")"
+    else
+        echo "Failed to upload the backup to FTP."
+    fi
 else
     echo "Backup created locally: $(basename "$BACKUP_FILE")"
 fi
