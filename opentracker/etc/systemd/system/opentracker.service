@@ -1,0 +1,14 @@
+[Unit]
+Description=opentracker Service
+After=network.target
+
+[Service]
+User=nobody
+Type=simple
+ExecStart=/opt/opentracker/opentracker -f /opt/opentracker/opentracker.conf &
+WorkingDirectory=/opt/opentracker/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
