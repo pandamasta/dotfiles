@@ -1,6 +1,10 @@
 #!/bin/bash
 cd ~/rtorrent_build/rtorrent
 make clean
+libtoolize
+aclocal
+autoconf
+automake --add-missing
 export CFLAGS="-g -I$HOME/rtorrent_build/libtorrent_install/include"
 export LDFLAGS="-L$HOME/rtorrent_build/libtorrent_install/lib"
 export PKG_CONFIG_PATH=$HOME/rtorrent_build/libtorrent_install/lib/pkgconfig:$PKG_CONFIG_PATH
