@@ -784,6 +784,12 @@ git rebase -r <some commit before all of your bad commits> --exec 'git commit --
 or
 git rebase -r --root --exec "git commit --amend --no-edit --reset-author"
 
+# Rewrite AUTHOR_DATA with COMMIT_DATE
+export COMMIT_DATE=$(git show -s --format=%ci)
+GIT_AUTHOR_DATE="$COMMIT_DATE" git commit --amend --no-edit --date="$COMMIT_DATE"
+git rebase --continue
+
+
 
 ```
 
