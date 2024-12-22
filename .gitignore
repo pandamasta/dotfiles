@@ -1,3 +1,7 @@
 vim/.vim/autoload/
 vim/.vim/plugged/
 vim/.vim/.netrwhist
+scripts/backup/backup.log
+scripts/backup/backup.conf
+scripts/backup/rsync-exclude.txt
+scripts/backup/rsync-include.txt
