@@ -144,6 +144,20 @@ openssl s_client -proxy <HOST:PORT> -connect <HOST:PORT> -servername=<HOST>  2>&
 
 #  Create p12
 openssl pkcs12 -export -in wildcard.foo.cer -inkey wildcard.foo.key -certfile GLOBALSIGN.crt -out certif.p12
+
+# Get issuer and subject
+openssl x509 -in <certificate.crt> -noout -issuer -subject
+
+# Fetch remote certif
+openssl s_client -connect <remote_host>:443 -showcerts
+
+# Verify the validity
+openssl verify -CAfile /etc/ssl/certs/ca-certificates.crt certif_to_check.crt
+
+# Deploy certificate on /etc/ssl/certs/ca-certificates.crt
+Put in: /usr/local/share/ca-certificates/
+update-ca-certificates
+
 ```
 
 Packages
