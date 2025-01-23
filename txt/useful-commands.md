@@ -811,7 +811,12 @@ Windows
 ```
 #Nat
 Add-NetNatStaticMapping  -NatName NATNetwork  -Protocol TCP  -ExternalIPAddress 0.0.0.0/24  -ExternalPort 80  -InternalIPAddress 10.0.0.3  -InternalPort 80
+
+# Add SSH client
+Get-WindowsCapability -Online | Where-Object {$_.Name -like 'OpenSSH.Client*'} | Add-WindowsCapability -Online
 ```
+
+
 
 Curl
 -----
@@ -906,4 +911,18 @@ Tcpdump
 --------
 ```
 tcpdump -i eth0 dst x.x.x.x and src x.x.x.x and src port 80 -w xx.pcap
+```
+
+HAproxy
+--------
+```
+haproxy -c -f /usr/local/etc/haproxy.conf && haproxy -f /usr/local/etc/haproxy.conf -sf $(pgrep -o haproxy)
+```
+
+Proxmox
+---------
+```
+# Mount a volume to container
+pct set 102 -mp0 /data/backup,mp=/data
+chown 101000:101000 /data/backup/
 ```
