@@ -1,0 +1,28 @@
+# My Useful command for OpenBSD
+# Aurelien Martin 2025-01-14
+
+##########
+# Package
+##########
+
+# Search Package
+pkg_info -aQ
+
+# List installed package
+pkg_info -mz
+
+# Update package
+pkg_info -u
+
+######
+# pf
+######
+
+# Load new rules
+pfctl -f /etc/pf.conf
+
+# Show current state
+pfctl -ss 
+
+# Monitor traffic
+tcpdump -ni $wan_if port 443
