@@ -175,6 +175,16 @@ done | sort -k 3 -n -r) | column -t
 
 }
 
+
+flush_iptable() {
+
+iptables -F
+iptables -t nat -F
+iptables -t raw -F
+iptables -t mangle -F
+
+}
+
 #export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
 #ssh-add -l 2>/dev/null >/dev/null
 #if [ $? -ge 2 ]; then
