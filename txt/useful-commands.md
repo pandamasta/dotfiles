@@ -828,7 +828,12 @@ Windows
 ```
 #Nat
 Add-NetNatStaticMapping  -NatName NATNetwork  -Protocol TCP  -ExternalIPAddress 0.0.0.0/24  -ExternalPort 80  -InternalIPAddress 10.0.0.3  -InternalPort 80
+
+# Add SSH client
+Get-WindowsCapability -Online | Where-Object {$_.Name -like 'OpenSSH.Client*'} | Add-WindowsCapability -Online
 ```
+
+
 
 Curl
 -----
@@ -945,3 +950,17 @@ yq 'with_entries(select(.value.the_value == "xxxxxx"))' <file> # Get key with a 
 yq 'with_entries(select(.value.the_value == "xxxxxx")) | keys' <file> # Get only key with a specific value as list
 yq 'with_entries(select(.value.the_value == "xxxxxx")) | keys | .[]' <file> # Get only key wit with specific value  without []
 yq 'with_entries(select(.value.the_value == "xxxxxx")) | to_entries | .[] | {(.key): {sslcert: .value.sslcert, jira: .value.jira}}' <file>
+
+HAproxy
+--------
+```
+haproxy -c -f /usr/local/etc/haproxy.conf && haproxy -f /usr/local/etc/haproxy.conf -sf $(pgrep -o haproxy)
+```
+
+Proxmox
+---------
+```
+# Mount a volume to container
+pct set 102 -mp0 /data/backup,mp=/data
+chown 101000:101000 /data/backup/
+```

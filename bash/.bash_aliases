@@ -198,6 +198,14 @@ search_yaml_value() {
 }
 
 
+flush_iptable() {
+
+iptables -F
+iptables -t nat -F
+iptables -t raw -F
+iptables -t mangle -F
+
+}
 
 ### SSH agent
 
