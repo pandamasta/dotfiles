@@ -13,7 +13,7 @@ alias c='clear'
 alias aptgi='sudo apt-get install'
 alias aptgu='sudo apt-get update'
 alias aptcp='sudo apt-cache policy'
-alias aptcs='sudo apt-cache search'
+alias aptcs='apt-cache search'
 alias bashupdate='source ~/.bash_aliases'
 alias ports='netstat -tulanp'
 alias header='curl -I'
@@ -44,7 +44,7 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-alias pssh="usr/bin/sshpass -f ~/.sp parallel-ssh -x "-o StrictHostKeyChecking=no" -A -l user -H"
+alias ppssh="/usr/bin/sshpass -f ~/.sp pssh -x "-o StrictHostKeyChecking=no" -A -l user -H"
 
 # Load private aliases if exist.
 
@@ -174,6 +174,32 @@ do
 done | sort -k 3 -n -r) | column -t
 
 }
+
+# Function to search for any key-value pair in a YAML file
+search_yaml_value() {
+  local search_key="$1"     # Key to search for (e.g., sslcert)
+  local search_value="$2"   # Value to search for (e.g., wildcard.bitiso.net_2025-2026)
+  local mode="$3"           # Mode: keys or values
+  local file_path="$4"      # YAML file path
+
+  if [[ -z "$search_key" || -z "$search_value" || -z "$mode" || -z "$file_path" ]]; then
+    echo "Usage: search_yaml_value <search_key> <search_value> <mode: keys|values> <file_path>"
+    return 1
+  fi
+
+  if [[ "$mode" == "keys" ]]; then
+    yq "with_entries(select(.value.$search_key == \"$search_value\")) | keys | .[]" "$file_path"
+  elif [[ "$mode" == "values" ]]; then
+    yq "with_entries(select(.value.$search_key == \"$search_value\")) | to_entries | .[] | {(.key): .value}" "$file_path"
+  else
+    echo "Invalid mode. Use 'keys' to get matching keys or 'values' to get the matched content."
+    return 1
+  fi
+}
+
+
+
+### SSH agent
 
 #export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
 #ssh-add -l 2>/dev/null >/dev/null

@@ -221,6 +221,9 @@ apt-mark showhold
 
 # Simulate install
 apt -s install ./<package>.deb
+
+# Don't verify certificate
+apt -o Acquire::https::Verify-Peer=false update
 ```
 Audio
 ------
@@ -921,3 +924,24 @@ Tcpdump
 ```
 tcpdump -i eth0 dst x.x.x.x and src x.x.x.x and src port 80 -w xx.pcap
 ```
+
+Virtual disk
+------------
+```
+guestmount --add ubuntu.vhdx --inspector --ro /mnt/ubuntu
+```
+
+Nmap
+----
+
+nmap --script ssl-enum-ciphers -p 443 <IP_du_serveur> --script-args 'ssl-enum-ciphers.servername=<nom_du_site>'
+nmap --script ssl-enum-ciphers -p 443 <nom_du_site>
+
+# jq/yq
+yq 'keys' <file> # get all keys
+yq '.the_key' <file> # Key content
+yq '.the_key.the_value' <file> # Extract only a value
+yq 'with_entries(select(.value.the_value == "xxxxxx"))' <file> # Get key with a specific value
+yq 'with_entries(select(.value.the_value == "xxxxxx")) | keys' <file> # Get only key with a specific value as list
+yq 'with_entries(select(.value.the_value == "xxxxxx")) | keys | .[]' <file> # Get only key wit with specific value  without []
+yq 'with_entries(select(.value.the_value == "xxxxxx")) | to_entries | .[] | {(.key): {sslcert: .value.sslcert, jira: .value.jira}}' <file>
