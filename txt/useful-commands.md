@@ -806,6 +806,26 @@ export COMMIT_DATE=$(git show -s --format=%ci)
 GIT_AUTHOR_DATE="$COMMIT_DATE" git commit --amend --no-edit --date="$COMMIT_DATE"
 git rebase --continue
 
+# Remove string on file on all commit
+# Delete file
+git filter-branch --force --tree-filter 'rm -f <file_with_password>' HEAD
+# Remove the script on all commit
+git filter-branch --force --tree-filter "sed -i '/PASSWORD/d' <file>" HEAD
+
+# Other approche
+## Remove file with secret
+git filter-branch --force --index-filter \
+git rm --cached --ignore-unmatch <file>' --prune-empty HEAD
+## Find if file as other name in history
+git log --name-only --pretty=format: | sort -u | grep <file>
+<file>
+## Restore the file
+git checkout HEAD -- <file>
+
+# If issue on windows
+
+git config --global core.sshCommand "C:\\Windows\\System32\\OpenSSH\\ssh.exe"
+
 
 
 ```
