@@ -984,3 +984,12 @@ Proxmox
 pct set 102 -mp0 /data/backup,mp=/data
 chown 101000:101000 /data/backup/
 ```
+
+ctag
+----
+# Generate tags for Python project only (no venv)
+ctags -R --languages=Python --python-kinds=-iv --exclude=migrations --exclude=__pycache__  --exclude=.git  --exclude=.venv -f .tags .
+
+# Generate tags including virtualenv
+ctags -R --languages=Python --python-kinds=-iv --exclude=migrations --exclude=__pycache__  --exclude=.git  -f .tags .
+#ctags -R --languages=Python --python-kinds=-iv --exclude=migrations --exclude=__pycache__  --exclude=.git  -f .tags . $(python -c 'import site; print(site.getsitepackages()[0])')
