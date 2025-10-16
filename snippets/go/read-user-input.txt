@@ -1,0 +1,71 @@
+# Get user input https://gosamples.dev/read-user-input/
+
+## Use fmt.Scanln() to read a single line of text
+
+package main
+
+import (
+    "fmt"
+    "log"
+)
+
+func main() {
+    fmt.Println("input text:")
+    var w1, w2, w3 string
+    n, err := fmt.Scanln(&w1, &w2, &w3)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Printf("number of items read: %d\n", n)
+    fmt.Printf("read line: %s %s %s-\n", w1, w2, w3)
+}
+
+-------------------------
+
+# Use bufio.Reader to read a single line of text
+
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "log"
+    "os"
+)
+
+func main() {
+    fmt.Println("input text:")
+    reader := bufio.NewReader(os.Stdin)
+    line, err := reader.ReadString('\n')
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Printf("read line: %s-\n", line)
+}
+
+--------------------------
+
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "log"
+    "os"
+)
+
+func main() {
+    fmt.Println("input text:")
+    scanner := bufio.NewScanner(os.Stdin)
+    scanner.Scan()
+    err := scanner.Err()
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Printf("read line: %s-\n", scanner.Text())
+}
+
+--------------------------
+
+
