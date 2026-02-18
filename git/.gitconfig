@@ -20,3 +20,16 @@
 [push]
     # Automatically set origin as the remote for current branch
     autoSetupRemote = true
+
+# To fix
+# fetch-pack: unexpected disconnect while reading sideband packet
+# When cloning linux
+#[core] 
+#    packedGitLimit = 512m 
+#    packedGitWindowSize = 512m 
+#[pack] 
+#    deltaCacheSize = 2047m 
+#    packSizeLimit = 2047m 
+#    windowMemory = 2047m
+[core]
+	compression = 0

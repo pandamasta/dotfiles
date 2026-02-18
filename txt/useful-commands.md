@@ -806,6 +806,29 @@ export COMMIT_DATE=$(git show -s --format=%ci)
 GIT_AUTHOR_DATE="$COMMIT_DATE" git commit --amend --no-edit --date="$COMMIT_DATE"
 git rebase --continue
 
+# Remove string on file on all commit
+# Delete file
+git filter-branch --force --tree-filter 'rm -f <file_with_password>' HEAD
+# Remove the script on all commit
+git filter-branch --force --tree-filter "sed -i '/PASSWORD/d' <file>" HEAD
+
+# Other approche
+## Remove file with secret
+git filter-branch --force --index-filter \
+git rm --cached --ignore-unmatch <file>' --prune-empty HEAD
+## Find if file as other name in history
+git log --name-only --pretty=format: | sort -u | grep <file>
+<file>
+## Restore the file
+git checkout HEAD -- <file>
+
+# If issue on windows
+
+git config --global core.sshCommand "C:\\Windows\\System32\\OpenSSH\\ssh.exe"
+
+# Check file created by an author
+git log --author="xxxx" --diff-filter=A --name-only --pretty=format:
+
 
 
 ```
@@ -964,3 +987,81 @@ Proxmox
 pct set 102 -mp0 /data/backup,mp=/data
 chown 101000:101000 /data/backup/
 ```
+
+ctag
+----
+# Generate tags for Python project only (no venv)
+ctags -R --languages=Python --python-kinds=-iv --exclude=migrations --exclude=__pycache__  --exclude=.git  --exclude=.venv -f .tags .
+
+# Generate tags including virtualenv
+ctags -R --languages=Python --python-kinds=-iv --exclude=migrations --exclude=__pycache__  --exclude=.git  -f .tags .
+#ctags -R --languages=Python --python-kinds=-iv --exclude=migrations --exclude=__pycache__  --exclude=.git  -f .tags . $(python -c 'import site; print(site.getsitepackages()[0])')
+
+mc
+--
+https://linuxcommand.org/lc3_adv_mc.php
+
+# Select defaut editor. Type:
+select-editor
+
+# Change directory listing
+ alt + t
+
+# Information pannel show and hide
+ctrl + x + i
+
+# List directory in other pane
+alt + o
+
+# Return to current dir
+alt + i
+
+# Hotlist of frequent visited direcory
+ctrl + \
+
+# Get a terminal in the path we are
+ctrl + o
+
+# Set chown on files
+ctrol + x + o
+
+# Contr
+ctrl + x + c
+
+## Directory management
+# Add directory to hotlist
+ctrl + x + h
+
+# Directory history
+Alt + H
+
+# Directory history forward and backward
+alt + u
+alt + y
+
+# Quickview mode for file on other pane
+Ctrl-x q
+
+# Quick view quit
+alt + i
+
+## Tagging
+# Select (tag) file by pattern
++
+
+# Select (tag) file visualbe
+Insert
+
+# Rename a file
+
+Shift + F6
+
+## File finding
+
+# Find dialog
+
+Alt + ?
+
+## External Panelize
+
+ctrx + x + !

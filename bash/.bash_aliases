@@ -207,6 +207,8 @@ iptables -t mangle -F
 
 }
 
+alias gentoken="'python -c 'import secrets; print(secrets.token_urlsafe(50))'"
+
 ### SSH agent
 
 #export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
