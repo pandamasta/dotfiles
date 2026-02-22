@@ -1,0 +1,22 @@
+table inet filter {
+	chain input {
+		type filter hook input priority filter; policy drop;
+		ct state invalid drop
+		ct state established,related accept
+		iif "lo" accept
+		ip protocol icmp accept
+		ip6 nexthdr ipv6-icmp accept
+		tcp dport 2222 ct state new limit rate 5/minute burst 10 packets accept
+        #ip saddr YOUR_ADMIN_IP tcp dport 2222 accept
+        #ip6 saddr YOUR_ADMIN_IPV6 tcp dport 2222 accept
+		reject with icmpx admin-prohibited
+	}
+
+	chain forward {
+		type filter hook forward priority filter; policy drop;
+	}
+
+	chain output {
+		type filter hook output priority filter; policy accept;
+	}
+}

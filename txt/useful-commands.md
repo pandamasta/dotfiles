@@ -1,6 +1,6 @@
 Title: Useful commands
 Date: 2017-01-27
-Modified: 2024-05-17
+Modified: 2026-01-21
 Category: Howto
 Tags: linux,cli
 Summary: List of standard and most usefull CLI tools and tips
@@ -1065,3 +1065,11 @@ Alt + ?
 ## External Panelize
 
 ctrx + x + !
+
+
+# nftables
+
+nft list ruleset
+watch -n1 nft list chain inet filter input
+nft reset counters
+nft list ruleset -a
