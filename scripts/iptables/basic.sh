@@ -50,21 +50,32 @@ if ! sudo iptables -L DOCKER-USER &>/dev/null; then
     sudo iptables -N DOCKER-USER
 fi
 
-# Basic Docker rules
-sudo iptables -I DOCKER-USER -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-sudo iptables -I DOCKER-USER -i docker0 -j ACCEPT
-sudo iptables -I DOCKER-USER -o docker0 -j ACCEPT
+# Flush existing DOCKER-USER rules
+sudo iptables -F DOCKER-USER
+
+# Allow established/related traffic
+sudo iptables -A DOCKER-USER -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# Allow outbound internet from containers
+sudo iptables -A DOCKER-USER -o enp6s16 -j ACCEPT
+
+# Allow container bridge traffic
+sudo iptables -A DOCKER-USER -i docker0 -j ACCEPT
+sudo iptables -A DOCKER-USER -o docker0 -j ACCEPT
+
 
 # -------------------------------
-# Docker port restrictions (generic)
-# Only allow 80/443 + SSH to admin IPs
-# Drop all other exposed ports
+# Allowed exposed ports
 # -------------------------------
-sudo iptables -I DOCKER-USER -p tcp --dport 80 -j ACCEPT
-sudo iptables -I DOCKER-USER -p tcp --dport 443 -j ACCEPT
+
 #sudo iptables -I DOCKER-USER -p tcp --dport 2222 -s 1.2.3.0/24 -j ACCEPT
-sudo iptables -I DOCKER-USER -p tcp --dport 2222 -j ACCEPT
-sudo iptables -I DOCKER-USER -j DROP
+
+sudo iptables -A DOCKER-USER -p tcp --dport 80 -j ACCEPT
+sudo iptables -A DOCKER-USER -p tcp --dport 443 -j ACCEPT
+sudo iptables -A DOCKER-USER -p tcp --dport 2222 -j ACCEPT
+
+# Return to Docker internal rules (IMPORTANT)
+sudo iptables -A DOCKER-USER -j RETURN
 
 # Optional: log blocked Docker traffic
 # sudo iptables -I DOCKER-USER -j LOG --log-prefix "DOCKER-BLOCK: " --log-level 4
