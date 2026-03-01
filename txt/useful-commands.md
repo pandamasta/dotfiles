@@ -1073,3 +1073,28 @@ nft list ruleset
 watch -n1 nft list chain inet filter input
 nft reset counters
 nft list ruleset -a
+
+# Docker
+
+docker stats
+docker logs -f container_name
+docker restart container_name
+docker stop $(docker ps -q)
+docker exec -it [nom] bash
+docker image prune
+docker rmi [IMAGE_ID]
+docker system prune
+docker build -t new-image:v1 .
+
+docker compose up -d
+docker compose up -d --build
+docker compose down
+docker compose stop/start
+docker compose restart [service]
+docker compose exec [service] sh
+
+docker compose pull
+docker compose up -d --build
+docker compose ps
+
+docker network create --driver bridge proxy-net
