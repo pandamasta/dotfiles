@@ -46,6 +46,14 @@ alias ......="cd ../../../../.."
 
 alias ppssh="/usr/bin/sshpass -f ~/.sp pssh -x "-o StrictHostKeyChecking=no" -A -l user -H"
 
+alias gp='git pull'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push'
+alias gk='git lg'
+alias gd='git diff'
+alias g='git status'
+
 # Load private aliases if exist.
 
 if [ -f ~/.bash_aliases_private ]; then
@@ -209,6 +217,22 @@ iptables -t mangle -F
 
 alias gentoken="'python -c 'import secrets; print(secrets.token_urlsafe(50))'"
 
+
+gblame() {
+    if [ -z "$1" ]; then
+        echo "Usage: gblame <pattern>"
+        return 1
+    fi
+
+    git grep -n --no-color -- "$1" |
+    while IFS=: read -r file line content; do
+        git blame -L "$line,$line" --date=short -- "$file"
+    done
+}
+
+
+
+
 ### SSH agent
 
 #export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
@@ -236,3 +260,6 @@ if [ $? -ge 2 ]; then
   # Add the SSH key to the new agent
   ssh-add ~/.ssh/id_amartin
 fi
+
+
+export PATH=$PATH:/usr/local/go/bin
