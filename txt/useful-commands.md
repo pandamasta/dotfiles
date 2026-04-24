@@ -1,6 +1,6 @@
 Title: Useful commands
 Date: 2017-01-27
-Modified: 2024-05-17
+Modified: 2026-01-21
 Category: Howto
 Tags: linux,cli
 Summary: List of standard and most usefull CLI tools and tips
@@ -1068,3 +1068,35 @@ ctrx + x + !
 
 # pip
 pip list --outdated | tail -n +3 | awk '{print $1}' | xargs -n1 pip install -U
+
+# nftables
+
+nft list ruleset
+watch -n1 nft list chain inet filter input
+nft reset counters
+nft list ruleset -a
+
+# Docker
+
+docker stats
+docker logs -f container_name
+docker restart container_name
+docker stop $(docker ps -q)
+docker exec -it [nom] bash
+docker image prune
+docker rmi [IMAGE_ID]
+docker system prune
+docker build -t new-image:v1 .
+
+docker compose up -d
+docker compose up -d --build
+docker compose down
+docker compose stop/start
+docker compose restart [service]
+docker compose exec [service] sh
+
+docker compose pull
+docker compose up -d --build
+docker compose ps
+
+docker network create --driver bridge proxy-net

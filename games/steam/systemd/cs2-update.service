@@ -1,0 +1,14 @@
+[Unit]
+Description=Update and Restart CS2 Server
+After=network.target
+
+[Service]
+Type=oneshot
+User=steam
+Group=steam
+WorkingDirectory=/srv/steamcmd/servers/cs2_server
+ExecStart=/bin/bash /srv/steamcmd/scripts/update_cs2.sh
+ReadWritePaths=/srv/steamcmd/servers/cs2_server /srv/steamcmd/scripts/env/cs2
+
+[Install]
+WantedBy=multi-user.target

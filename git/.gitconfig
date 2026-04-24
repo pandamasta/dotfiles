@@ -1,8 +1,8 @@
 ;Since git 1.7.10 it'es possible to include external file
 ;I use it to store private data like:
 ;[user]
-;    name= 
-;    email = 
+;    name =
+;    email =
 [include]
     path = ~/.gitconfig_private
 
@@ -24,12 +24,12 @@
 # To fix
 # fetch-pack: unexpected disconnect while reading sideband packet
 # When cloning linux
-#[core] 
-#    packedGitLimit = 512m 
-#    packedGitWindowSize = 512m 
-#[pack] 
-#    deltaCacheSize = 2047m 
-#    packSizeLimit = 2047m 
+#[core]
+#    packedGitLimit = 512m
+#    packedGitWindowSize = 512m
+#[pack]
+#    deltaCacheSize = 2047m
+#    packSizeLimit = 2047m
 #    windowMemory = 2047m
-[core]
-	compression = 0
+#[core]
+#	compression = 0

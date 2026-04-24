@@ -1,0 +1,22 @@
+[Unit]
+Description=Counter-Strike 2 Dedicated Server
+After=network.target
+
+[Service]
+Type=simple
+User=steam
+Group=steam
+WorkingDirectory=/srv/steamcmd/servers/cs2_server
+ExecStart=/bin/bash /srv/steamcmd/scripts/start_cs2.sh
+Restart=on-failure
+RestartSec=5
+ProtectSystem=full
+ProtectHome=true
+PrivateDevices=true
+NoNewPrivileges=true
+Nice=5
+ReadWritePaths=/srv/steamcmd/servers/cs2_server /srv/steamcmd/scripts/env/cs2
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

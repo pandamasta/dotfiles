@@ -1,0 +1,22 @@
+services:
+  landing-web:
+    build: .
+    container_name: landing-web
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'    # Max 50% d'un cœur CPU
+          memory: 128M   # Largement assez pour du Nginx Alpine
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # -----------------------
+    networks:
+      - proxy-net
+
+networks:
+  proxy-net:
+    external: true

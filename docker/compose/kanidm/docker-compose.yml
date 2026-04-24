@@ -1,0 +1,26 @@
+# PRE-REQUIS : 
+# mkdir data && sudo chown 1000:1000 data
+# docker run --rm -v $(pwd)/data:/data kanidm/server:latest kanidmd cert-generate
+# sudo chown 1000:1000 data/*.pem
+
+services:
+  kanidm:
+    image: kanidm/server:latest
+    container_name: kanidmd
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+      - ./server.toml:/data/server.toml:ro
+    ports:
+      - "636:3636" # LDAP
+    networks:
+      - proxy-net
+    user: "1000:1000" # Force l'exécution sans root
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+networks:
+  proxy-net:
+    external: true
